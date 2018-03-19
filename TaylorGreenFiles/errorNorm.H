@@ -5,7 +5,8 @@ if(TaylorGreenDimension =="2D")
     Uerror = Ustart*Foam::exp(-2.0*nu.value()*runTime.value()) - U;
 
     ULinfErr = max(mag(Uerror));          // infinity norm
-    UL2err   = sqrt(sum(magSqr(Uerror))); // 2nd norm
+    //UL2err   = sqrt(sum(magSqr(Uerror))); // 2nd norm
+    UL2err = sqrt(magSqr(Uerror)().weightedAverage(mesh.V()));
 
     // Pressure error norms ----------------------------------------------------------//
     Info << "Calculating perror" << endl;
@@ -24,7 +25,8 @@ if(TaylorGreenDimension =="2D")
 
 
     pLinfErr = max(mag(perror));          // infinity norm
-    pL2err   = sqrt(sum(magSqr(perror))); // 2nd norm
+    //pL2err   = sqrt(sum(magSqr(perror))); // 2nd norm
+    pL2err = sqrt(magSqr(perror)().weightedAverage(mesh.V()));
 
     Info << "L2   error norm | Velocity: " << UL2err.value()   << "\tPressure: " << pL2err.value()   << endl;
     Info << "Linf error norm | Velocity: " << ULinfErr.value() << "\tPressure: " << pLinfErr.value() << endl;
