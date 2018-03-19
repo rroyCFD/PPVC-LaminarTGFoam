@@ -34,15 +34,10 @@ if(TaylorGreenDimension =="2D")
     Info << "Pressure decay coeffs: " << setprecision(10) << Foam::exp(-4.0*nu.value()*runTime.value()) << endl;
     Info << "Velocity decay coeffs: " << setprecision(10) << Foam::exp(-2.0*nu.value()*runTime.value()) << endl;
 
-    // Check error at time=0
-    // if (runTime.timeName() == "0")
-    // {
+    // write the error induced during simulation
+    if(runTime.timeName() == "0" || runTime.write()) 
+    {
         Uerror.write();
         perror.write();
-    // }
-    //---------------------------------------------------------------//
-    //Weighted average norm
-    // scalar waUErr =errUsqr.weightedAverage(mesh.V()).value();
-    // Info << "Weighted Average Error: "<< waUErr <<endl;
-    
+    }    
 }
